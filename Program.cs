@@ -1,10 +1,13 @@
 using GamesToPlayProject.Database;
+using GamesToPlayProject.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddScoped<IGamesService, GamesService>();
 
 builder.Services.AddDbContext<AppDbContext>(
     config => config.UseSqlServer(builder.Configuration.GetConnectionString("Application"))
@@ -25,6 +28,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Games}/{action=MyList}/{id?}");
 
 app.Run();

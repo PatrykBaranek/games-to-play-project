@@ -10,7 +10,7 @@ namespace GamesToPlayProject.Database
 {
     public class AppDbContext : DbContext
     {
-        DbSet<GamesEntity> Games { get; set; }
+        public DbSet<GamesEntity> Games { get; set; }
 
         public AppDbContext(DbContextOptions options): base(options)
         {

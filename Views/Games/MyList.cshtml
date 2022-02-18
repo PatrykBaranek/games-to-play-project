@@ -1,0 +1,19 @@
+﻿@model IEnumerable<GamesToPlayProject.Entities.GamesEntity>
+
+@{
+    ViewData["Title"] = "My List";
+}
+
+<div class="card-group">
+    @foreach (var item in Model)
+    {
+        <div class="card" style="width: 18rem;">
+            <img src="@item.ImgUrl" class="card-img-top" alt="@item.Title">
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+                <p class="card-text">You spent: @item.TimeSpent Hours</p>
+                <a class="btn btn-primary" asp-controller="Games" asp-action="GameDetails" asp-route-id="@item.Id">View Details</a>
+            </div>
+        </div>
+    }
+</div>
