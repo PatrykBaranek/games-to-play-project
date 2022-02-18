@@ -1,7 +1,14 @@
+using GamesToPlayProject.Database;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<AppDbContext>(
+    config => config.UseSqlServer(builder.Configuration.GetConnectionString("Application"))
+);
 
 var app = builder.Build();
 
