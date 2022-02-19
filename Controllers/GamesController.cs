@@ -1,4 +1,5 @@
-﻿using GamesToPlayProject.Services;
+﻿using GamesToPlayProject.Entities;
+using GamesToPlayProject.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -26,10 +27,36 @@ namespace GamesToPlayProject.Controllers
             return View(gamesList);
         }
 
-        //[HttpGet]
-        //public Task<IActionResult> GameDetails()
-        //{
-            
-        //}
+        [HttpGet]
+        public async Task<IActionResult> GameDetails(int? id)
+        {
+            var game = await _gamesService.GameDetails(id);
+
+            if(game == null)
+            {
+                return NotFound();
+            }
+
+            return View(game);
+        }
+
+        [HttpGet]
+        public IActionResult AddNewGameForm()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewGame(GamesEntity newGameData)
+        {
+            var newGame = await _gamesService.AddNewGame(newGameData);
+
+            if(newGame == null)
+            {
+                return BadRequest();
+            }
+
+            return RedirectToAction("MyList");
+        }
     }
 }

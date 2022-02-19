@@ -1,0 +1,14 @@
+﻿@model GamesToPlayProject.Entities.GamesEntity
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+
+<div>
+    <h2>@Model.Title</h2>
+    <p>You spent: @Model.TimeSpent Hours</p>
+    <div class="">
+        <img src="@Model.ImgUrl" class="img-fluid" alt="@Model.Title" />
+    </div>
+</div>

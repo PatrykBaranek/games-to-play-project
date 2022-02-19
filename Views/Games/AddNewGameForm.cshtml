@@ -1,0 +1,27 @@
+﻿@model GamesToPlayProject.Entities.GamesEntity
+
+
+@{
+    ViewData["Title"] = "Add new Game";
+}
+
+
+<form method="POST" asp-action="AddNewGame">
+    <div class="mb-3">
+        <label asp-for="Title" class="form-label">Title: </label>
+        <input asp-for="Title" class="form-control" required/>
+    </div>
+    <div class="mb-3">
+        <label asp-for="TimeSpent" class="form-label">Time Spent: </label>
+        <input asp-for="TimeSpent" class="form-control" required/>
+    </div>
+    <div class="mb-3">
+        <label asp-for="ImgUrl" class="form-label">ImgUrl: </label>
+        <input asp-for="ImgUrl" class="form-control" required/>
+    </div>
+    <div class="mb-3 form-check">
+        <input asp-for="IsFinished" type="checkbox"  class="form-check-input"/>
+        <label asp-for="IsFinished" class="form-check-label">Are you finished this game? </label>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit</button>
+</form>
