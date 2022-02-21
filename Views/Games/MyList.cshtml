@@ -18,6 +18,7 @@
                 <h5 class="card-title">@item.Title</h5>
                 <p class="card-text">You spent: @item.TimeSpent Hours</p>
                 <a class="btn btn-primary" asp-controller="Games" asp-action="GameDetails" asp-route-id="@item.Id">View Details</a>
+                <a class="btn btn-danger" asp-controller="Games" asp-action="DeleteGame" asp-route-id="@item.Id" >Delete from list</a>
             </div>
         </div>
     }

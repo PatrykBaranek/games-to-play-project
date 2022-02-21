@@ -16,7 +16,7 @@ namespace GamesToPlayProject.Services
         public GamesService(AppDbContext dbContext)
         {
             _dbContext = dbContext;
-        }        
+        }
 
         public async Task<IEnumerable<GamesEntity>> MyList()
         {
@@ -42,10 +42,53 @@ namespace GamesToPlayProject.Services
                 ImgUrl = newGameData.ImgUrl,
             };
 
+            if (newGame == null)
+            {
+                return null;
+            }
+
             await _dbContext.Games.AddAsync(newGame);
             await _dbContext.SaveChangesAsync();
 
             return newGame;
+        }
+
+        public async Task<GamesEntity> EditGameForm(int? id)
+        {
+            var game = await _dbContext.Games.FirstOrDefaultAsync(g => g.Id == id);
+
+            return game;
+        }
+
+        public async Task<GamesEntity> EditGame(int? id, GamesEntity game)
+        {
+            var gameToEdit = new GamesEntity()
+            {
+                Title = game.Title,
+                TimeSpent = game.TimeSpent,
+                ImgUrl = game.ImgUrl,
+                IsFinished = game.IsFinished,
+            };
+
+            _dbContext.Update(gameToEdit);
+            await _dbContext.SaveChangesAsync();
+
+            return gameToEdit;
+        }
+
+        public async Task<GamesEntity> DeleteGame(int? id)
+        {
+            var gameToDelete = await _dbContext.Games.FindAsync(id);
+
+            if(gameToDelete == null)
+            {
+                return null;
+            }
+
+            _dbContext.Games.Remove(gameToDelete);
+            await _dbContext.SaveChangesAsync();
+
+            return gameToDelete;
         }
     }
 }

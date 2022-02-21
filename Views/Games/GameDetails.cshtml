@@ -4,6 +4,7 @@
     ViewData["Title"] = @Model.Title;
 }
 
+<a class="btn btn-primary" asp-controller="Games" asp-action="EditGameForm" asp-route-id="@Model.Id">Edit Game</a>
 
 <div>
     <h2>@Model.Title</h2>

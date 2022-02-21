@@ -32,7 +32,7 @@ namespace GamesToPlayProject.Controllers
         {
             var game = await _gamesService.GameDetails(id);
 
-            if(game == null)
+            if (game == null)
             {
                 return NotFound();
             }
@@ -51,12 +51,52 @@ namespace GamesToPlayProject.Controllers
         {
             var newGame = await _gamesService.AddNewGame(newGameData);
 
-            if(newGame == null)
+            if (newGame == null)
             {
                 return BadRequest();
             }
 
             return RedirectToAction("MyList");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditGameForm(int? id)
+        {
+            var game = await _gamesService.EditGameForm(id);
+
+            if (game == null)
+            {
+                return NotFound();
+            }
+
+            return View(game);
+        }
+
+        [HttpPut("EditGame/{id}")]
+        public async Task<IActionResult> EditGame(int? id, GamesEntity game)
+        {
+            var newGameStats = await _gamesService.EditGame(id,game);
+
+            if (newGameStats == null)
+            {
+                return BadRequest();
+            }
+
+
+            return NoContent();
+        }
+
+        [HttpDelete("DeleteGame/{id}")]
+        public async Task<IActionResult> DeleteGame(int? id)
+        {
+            var gameToDelete = await _gamesService.DeleteGame(id);
+
+            if (gameToDelete == null)
+            {
+                return BadRequest();
+            }
+
+            return NoContent();
         }
     }
 }

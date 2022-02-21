@@ -12,5 +12,8 @@ namespace GamesToPlayProject.Services
         Task<IEnumerable<GamesEntity>> MyList();
         Task<GamesEntity> GameDetails(int? id);
         Task<GamesEntity> AddNewGame(GamesEntity newGameData);
+        Task<GamesEntity> EditGameForm(int? id);
+        Task<GamesEntity> EditGame(int? id, GamesEntity game);
+        Task<GamesEntity> DeleteGame(int? id);
     }
 }
