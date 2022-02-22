@@ -72,7 +72,7 @@ namespace GamesToPlayProject.Controllers
             return View(game);
         }
 
-        [HttpPut("EditGame/{id}")]
+        [HttpPut("Games/EditGame/{id}")]
         public async Task<IActionResult> EditGame(int? id, GamesEntity game)
         {
             var newGameStats = await _gamesService.EditGame(id,game);
@@ -86,7 +86,7 @@ namespace GamesToPlayProject.Controllers
             return NoContent();
         }
 
-        [HttpDelete("DeleteGame/{id}")]
+        [HttpDelete("Games/DeleteGame/{id}")]
         public async Task<IActionResult> DeleteGame(int? id)
         {
             var gameToDelete = await _gamesService.DeleteGame(id);
