@@ -72,20 +72,6 @@ namespace GamesToPlayProject.Controllers
             return View(game);
         }
 
-        [HttpPut("Games/EditGame/{id}")]
-        public async Task<IActionResult> EditGame(int? id, GamesEntity game)
-        {
-            var newGameStats = await _gamesService.EditGame(id,game);
-
-            if (newGameStats == null)
-            {
-                return BadRequest();
-            }
-
-
-            return NoContent();
-        }
-
         [HttpDelete("Games/DeleteGame/{id}")]
         public async Task<IActionResult> DeleteGame(int? id)
         {

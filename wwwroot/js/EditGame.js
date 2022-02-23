@@ -1,16 +1,29 @@
-﻿const form = document.forms[0];
+﻿const form = document.querySelector('form');
 
-form.addEventListener("submit", async e => {
-    e.preventDefault();
+const id = document.querySelector('#title').dataset.id;
 
-    const formData = new FormData(form);
+form.addEventListener('submit', async (e) => {
+	e.preventDefault();
 
-    console.log(formData);
+	const formData = {
+		title: document.querySelector('#title').value,
+		timeSpent: document.querySelector('#timeSpent').value,
+		imgUrl: document.querySelector('#imgUrl').value,
+		isFinished: document.querySelector('#isFinished').value,
+	};
 
-    const response = await fetch("/api/Games", {
-        method: "PUT",
-        body: formData
-    });
+	const putMethod = {
+		method: 'PUT',
+		headers: {
+			'Content-type': 'application/json; charset=UTF-8',
+		},
+		body: JSON.stringify(formData),
+	};
 
-    console.log(response.status + " " + response.statusText);
+	console.log(formData);
+
+	await fetch('/api/GamesApi/EditGame/' + id, putMethod)
+		.then((response) => response.json())
+		.then((data) => console.log(data))
+		.catch((err) => console.log(err));
 });

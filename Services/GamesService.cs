@@ -62,16 +62,16 @@ namespace GamesToPlayProject.Services
 
         public async Task<GamesEntity> EditGame(int? id, GamesEntity game)
         {
-            var gameToEdit = new GamesEntity()
-            {
-                Title = game.Title,
-                TimeSpent = game.TimeSpent,
-                ImgUrl = game.ImgUrl,
-                IsFinished = game.IsFinished,
-            };
+            var gameToEdit = await _dbContext.Games.FindAsync(id);
 
-            _dbContext.Update(gameToEdit);
-            await _dbContext.SaveChangesAsync();
+            if (gameToEdit != null)
+            {
+                gameToEdit.Title = game.Title;
+                gameToEdit.TimeSpent = game.TimeSpent;
+                gameToEdit.ImgUrl = game.ImgUrl;
+                gameToEdit.IsFinished = game.IsFinished;
+                await _dbContext.SaveChangesAsync();
+            }
 
             return gameToEdit;
         }
@@ -80,7 +80,7 @@ namespace GamesToPlayProject.Services
         {
             var gameToDelete = await _dbContext.Games.FindAsync(id);
 
-            if(gameToDelete == null)
+            if (gameToDelete == null)
             {
                 return null;
             }
