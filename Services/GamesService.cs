@@ -29,7 +29,7 @@ namespace GamesToPlayProject.Services
 
             IQueryable<GamesEntity> gamesQuery = _dbContext.Games;
 
-            gamesQuery = gamesQuery.Where(x => x.Owner == currentUser);
+            gamesQuery = gamesQuery.Where(x => x.User == currentUser);
 
             var gamesList = await gamesQuery.ToListAsync();
 
@@ -53,7 +53,7 @@ namespace GamesToPlayProject.Services
                 TimeSpent = newGameData.TimeSpent,
                 IsFinished = newGameData.IsFinished,
                 ImgUrl = newGameData.ImgUrl,
-                Owner = currentUser
+                User = currentUser
             };
 
             if (newGame == null)

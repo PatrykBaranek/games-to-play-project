@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace GamesToPlayProject.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
     public class GamesApiController : ControllerBase
     {
 
         private readonly IGamesService _gamesService;
 
-        public GamesApiController(IGamesService gamesService )
+        public GamesApiController(IGamesService gamesService)
         {
             _gamesService = gamesService;
         }
 
         [HttpPut("editgame/{id}")]
-        public async Task<IActionResult> EditGame([FromRoute] int? id, [FromBody]GamesEntity game)
+        public async Task<IActionResult> EditGame([FromRoute] int? id, [FromBody] GamesEntity game)
         {
             var editGame = await _gamesService.EditGame(id, game);
 
-            if(editGame == null)
+            if (editGame == null)
             {
                 return BadRequest();
             }
@@ -37,11 +37,11 @@ namespace GamesToPlayProject.Controllers
         }
 
         [HttpDelete("deletegame/{id}")]
-        public async Task<IActionResult> DeleteGame(int? id)
+        public async Task<IActionResult> DeleteGame([FromRoute] int? id)
         {
             await _gamesService.DeleteGame(id);
 
-            if(id == null)
+            if (id == null)
             {
                 return BadRequest();
             }

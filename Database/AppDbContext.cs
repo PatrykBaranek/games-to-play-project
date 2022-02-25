@@ -12,6 +12,7 @@ namespace GamesToPlayProject.Database
     public class AppDbContext : IdentityDbContext
     {
         public DbSet<GamesEntity> Games { get; set; }
+        public DbSet<WishlistEntity> Wishlist { get; set; }
 
         public AppDbContext(DbContextOptions options): base(options)
         {

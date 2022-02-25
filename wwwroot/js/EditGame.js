@@ -26,5 +26,5 @@ form.addEventListener('submit', async (e) => {
 		.then((response) => response.json())
 		.then((data) => data)
 		.then((window.location.href = 'http://localhost:5000'))
-		.catch((err) => console.log(err));
+		.catch((err) => console.error(err));
 });

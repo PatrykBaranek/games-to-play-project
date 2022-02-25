@@ -5,37 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace GamesToPlayProject.Migrations
 {
-    public partial class Identity : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DeleteData(
-                table: "Games",
-                keyColumn: "Id",
-                keyValue: 1);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Games",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ImgUrl",
-                table: "Games",
-                type: "nvarchar(max)",
-                nullable: true,
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)");
-
-            migrationBuilder.AddColumn<string>(
-                name: "OwnerId",
-                table: "Games",
-                type: "nvarchar(450)",
-                nullable: true);
-
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -181,10 +154,52 @@ namespace GamesToPlayProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Games_OwnerId",
-                table: "Games",
-                column: "OwnerId");
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeSpent = table.Column<int>(type: "int", nullable: false),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    IsFinished = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Games_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Wishlist",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    WhenToPlay = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    GameId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Wishlist", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Wishlist_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Wishlist_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id");
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -225,20 +240,24 @@ namespace GamesToPlayProject.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
 
-            migrationBuilder.AddForeignKey(
-                name: "FK_Games_AspNetUsers_OwnerId",
+            migrationBuilder.CreateIndex(
+                name: "IX_Games_UserId",
                 table: "Games",
-                column: "OwnerId",
-                principalTable: "AspNetUsers",
-                principalColumn: "Id");
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wishlist_GameId",
+                table: "Wishlist",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Wishlist_UserId",
+                table: "Wishlist",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Games_AspNetUsers_OwnerId",
-                table: "Games");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -255,43 +274,16 @@ namespace GamesToPlayProject.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
+                name: "Wishlist");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
+                name: "Games");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropIndex(
-                name: "IX_Games_OwnerId",
-                table: "Games");
-
-            migrationBuilder.DropColumn(
-                name: "OwnerId",
-                table: "Games");
-
-            migrationBuilder.AlterColumn<string>(
-                name: "Title",
-                table: "Games",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.AlterColumn<string>(
-                name: "ImgUrl",
-                table: "Games",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "",
-                oldClrType: typeof(string),
-                oldType: "nvarchar(max)",
-                oldNullable: true);
-
-            migrationBuilder.InsertData(
-                table: "Games",
-                columns: new[] { "Id", "ImgUrl", "IsFinished", "TimeSpent", "Title" },
-                values: new object[] { 1, "https://image.ceneostatic.pl/data/article_picture/87/ba/8615-3732-4335-82df-e6522b68f716_large.png", false, 0, "Dying Light 2" });
         }
     }
 }

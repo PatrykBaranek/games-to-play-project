@@ -14,6 +14,6 @@ namespace GamesToPlayProject.Entities
         public int TimeSpent { get; set; }
         public string ImgUrl { get; set; }
         public bool IsFinished { get; set; }
-        public IdentityUser Owner { get; set; }
+        public IdentityUser User { get; set; }
     }
 }
