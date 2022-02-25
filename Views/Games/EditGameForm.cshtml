@@ -4,27 +4,24 @@
     ViewData["Title"] = $"Edit game: {@Model.Title}";
 }
 
-<form method="post"  asp-action="EditGame" asp-route-id="@Model.Id">
+<form method="post" asp-action="EditGame" asp-route-id="@Model.Id">
     <div class="mb-3">
-        <label asp-for="Title" class="form-label">Title: </label>
-        <input asp-for="Title" class="form-control" id="title" required value="Title" data-id="@Model.Id" />
-        <span class="alert-danger" asp-validation-for="Title"></span>
+        <label asp-for="@Model.Title" class="form-label">Title: </label>
+        <input asp-for="@Model.Title" class="form-control" id="title" required value="@Model.Title" data-id="@Model.Id"/>
     </div>
     <div class="mb-3">
-        <label asp-for="TimeSpent" class="form-label">Time Spent: </label>
-        <input asp-for="TimeSpent" class="form-control" id="timeSpent" required min="0" value="@Model.TimeSpent" />
-        <span class="alert-danger" asp-validation-for="TimeSpent"></span>
+        <label asp-for="@Model.TimeSpent" class="form-label">Time Spent: </label>
+        <input asp-for="@Model.TimeSpent" class="form-control" id="timeSpent" required min="0" value="@Model.TimeSpent"/>
     </div>
     <div class="mb-3">
-        <label asp-for="ImgUrl" class="form-label">ImgUrl: </label>
-        <input asp-for="ImgUrl" class="form-control" id="imgUrl" required value="@Model.ImgUrl" />
-        <span class="alert-danger" asp-validation-for="ImgUrl"></span>
+        <label asp-for="@Model.ImgUrl" class="form-label">ImgUrl: </label>
+        <input asp-for="@Model.ImgUrl" class="form-control" id="imgUrl" required value="@Model.ImgUrl"/>
     </div>
     <div class="mb-3 form-check">
-        <input asp-for="IsFinished" type="checkbox" id="isFinished" class="form-check-input" />
-        <label asp-for="IsFinished" class="form-check-label">Are you finished this game? </label>
+        <input asp-for="@Model.IsFinished" type="checkbox" id="isFinished" class="form-check-input"/>
+        <label asp-for="@Model.IsFinished" class="form-check-label">Are you finished this game? </label>
     </div>
-    <input class="btn btn-primary" type="submit" value="Apply changes" />
+    <button class="btn btn-primary" type="submit">Apply changes</button>
 
 </form>
 

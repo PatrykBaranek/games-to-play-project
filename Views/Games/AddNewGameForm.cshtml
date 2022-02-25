@@ -6,21 +6,18 @@
 }
 
 
-<form method="POST" action="">
+<form method="POST" asp-action="AddNewGame">
     <div class="mb-3">
         <label asp-for="Title" class="form-label">Title: </label>
         <input asp-for="Title" class="form-control" required/>
-        <span class="alert-danger" asp-validation-for="Title"></span>
     </div>
     <div class="mb-3">
         <label asp-for="TimeSpent" class="form-label">Time Spent: </label>
         <input asp-for="TimeSpent" class="form-control" required min="0"/>
-        <span class="alert-danger" asp-validation-for="TimeSpent"></span>
     </div>
     <div class="mb-3">
         <label asp-for="ImgUrl" class="form-label">ImgUrl: </label>
         <input asp-for="ImgUrl" class="form-control" required/>
-        <span class="alert-danger" asp-validation-for="ImgUrl"></span>
     </div>
     <div class="mb-3 form-check">
         <input asp-for="IsFinished" type="checkbox"  class="form-check-input"/>

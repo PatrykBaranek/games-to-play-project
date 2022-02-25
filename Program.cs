@@ -1,6 +1,5 @@
 using GamesToPlayProject.Database;
 using GamesToPlayProject.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,12 +9,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IGamesService, GamesService>();
 
-builder.Services.AddDbContext<AppDbContext>(config =>
-    config.UseSqlServer(builder.Configuration.GetConnectionString("Application"))
+builder.Services.AddDbContext<AppDbContext>(
+    config => config.UseSqlServer(builder.Configuration.GetConnectionString("Application"))
 );
-
-builder.Services.AddDefaultIdentity<IdentityUser>()
-    .AddEntityFrameworkStores<AppDbContext>();
 
 builder.Services.AddCors(options =>
     options.AddPolicy("FrontEndApp", builder =>
@@ -36,14 +32,10 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Games}/{action=MyList}/{id?}");
-
-app.UseEndpoints(endpoints => 
-    endpoints.MapRazorPages());
 
 app.Run();

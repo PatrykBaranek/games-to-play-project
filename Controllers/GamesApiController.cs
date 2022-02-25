@@ -1,6 +1,5 @@
 ﻿using GamesToPlayProject.Entities;
 using GamesToPlayProject.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -10,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace GamesToPlayProject.Controllers
 {
-    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class GamesApiController : ControllerBase
@@ -18,17 +16,17 @@ namespace GamesToPlayProject.Controllers
 
         private readonly IGamesService _gamesService;
 
-        public GamesApiController(IGamesService gamesService)
+        public GamesApiController(IGamesService gamesService )
         {
             _gamesService = gamesService;
         }
 
         [HttpPut("editgame/{id}")]
-        public async Task<IActionResult> EditGame([FromRoute] int? id, [FromBody] GamesEntity game)
+        public async Task<IActionResult> EditGame([FromRoute] int? id, [FromBody]GamesEntity game)
         {
             var editGame = await _gamesService.EditGame(id, game);
 
-            if (editGame == null)
+            if(editGame == null)
             {
                 return BadRequest();
             }
@@ -37,11 +35,11 @@ namespace GamesToPlayProject.Controllers
         }
 
         [HttpDelete("deletegame/{id}")]
-        public async Task<IActionResult> DeleteGame([FromRoute] int? id)
+        public async Task<IActionResult> DeleteGame(int? id)
         {
             await _gamesService.DeleteGame(id);
 
-            if (id == null)
+            if(id == null)
             {
                 return BadRequest();
             }
