@@ -4,22 +4,24 @@
     ViewData["Title"] = "My List";
 }
 
-<div class="d-flex justify-content-center align-items-center">
+<div class="d-flex justify-content-center align-items-center pb-3">
     <a class="btn btn-primary" asp-controller="Games" asp-action="AddNewGameForm">Add New Game</a>
 
 </div>
 
-<div class="card-group">
+<div class="card-group w-100 justify-content-center align-content-center">
     @foreach (var item in Model)
     {
-        <div class="card" style="width: 18rem;">
+        <div class="card m-2" style="width: 18rem;">
             <img src="@item.ImgUrl" class="card-img-top img-fluid rounded" alt="@item.Title">
             <div class="card-body">
                 <h5 class="card-title">@item.Title</h5>
                 <p class="card-text">You spent: @item.TimeSpent Hours</p>
                 <a class="btn btn-primary" asp-controller="Games" asp-action="GameDetails" asp-route-id="@item.Id">View Details</a>
-                <a class="btn btn-danger" asp-controller="Games" asp-action="DeleteGame" asp-route-id="@item.Id" >Delete from list</a>
+                <button class="btn btn-danger deleteBtn" data-id="@item.Id">Delete from list</button>
             </div>
         </div>
     }
 </div>
+
+<script src="~/js/DeleteGame.js"></script>

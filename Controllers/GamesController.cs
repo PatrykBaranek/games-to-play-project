@@ -71,18 +71,5 @@ namespace GamesToPlayProject.Controllers
 
             return View(game);
         }
-
-        [HttpDelete("Games/DeleteGame/{id}")]
-        public async Task<IActionResult> DeleteGame(int? id)
-        {
-            var gameToDelete = await _gamesService.DeleteGame(id);
-
-            if (gameToDelete == null)
-            {
-                return BadRequest();
-            }
-
-            return NoContent();
-        }
     }
 }
