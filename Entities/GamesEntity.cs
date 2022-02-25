@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,6 @@ namespace GamesToPlayProject.Entities
         public int TimeSpent { get; set; }
         public string ImgUrl { get; set; }
         public bool IsFinished { get; set; }
+        public IdentityUser Owner { get; set; }
     }
 }

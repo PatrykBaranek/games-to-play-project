@@ -1,5 +1,6 @@
 ﻿using GamesToPlayProject.Database;
 using GamesToPlayProject.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,15 +13,25 @@ namespace GamesToPlayProject.Services
     public class GamesService : IGamesService
     {
         private readonly AppDbContext _dbContext;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public GamesService(AppDbContext dbContext)
+        public GamesService(AppDbContext dbContext, UserManager<IdentityUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             _dbContext = dbContext;
+            _userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IEnumerable<GamesEntity>> MyList()
         {
-            var gamesList = await _dbContext.Games.ToListAsync();
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
+            IQueryable<GamesEntity> gamesQuery = _dbContext.Games;
+
+            gamesQuery = gamesQuery.Where(x => x.Owner == currentUser);
+
+            var gamesList = await gamesQuery.ToListAsync();
 
             return gamesList;
         }
@@ -34,12 +45,15 @@ namespace GamesToPlayProject.Services
 
         public async Task<GamesEntity> AddNewGame(GamesEntity newGameData)
         {
+            var currentUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+
             var newGame = new GamesEntity()
             {
                 Title = newGameData.Title,
                 TimeSpent = newGameData.TimeSpent,
                 IsFinished = newGameData.IsFinished,
                 ImgUrl = newGameData.ImgUrl,
+                Owner = currentUser
             };
 
             if (newGame == null)
