@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace GamesToPlayProject.Controllers
 {
-    [Authorize]
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class GamesApiController : ControllerBase

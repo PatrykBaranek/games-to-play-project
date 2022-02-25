@@ -73,5 +73,8 @@ namespace GamesToPlayProject.Controllers
 
             return View(game);
         }
+
+
+       
     }
 }
