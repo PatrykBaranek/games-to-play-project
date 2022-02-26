@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GamesToPlayProject.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220218175349_Init")]
+    [Migration("20220225193957_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

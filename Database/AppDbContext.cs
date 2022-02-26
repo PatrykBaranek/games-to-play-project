@@ -20,14 +20,16 @@ namespace GamesToPlayProject.Database
         {
             modelBuilder.Entity<GamesEntity>()
                 .Property(g => g.Title)
+                .HasMaxLength(50)
+                .IsRequired();
+
+            modelBuilder.Entity<GamesEntity>()
+                .Property(g => g.TimeSpent)
                 .IsRequired();
 
             modelBuilder.Entity<GamesEntity>()
                 .Property(g => g.ImgUrl)
                 .IsRequired();
-
-            modelBuilder.Entity<GamesEntity>()
-                .HasData(new GamesEntity() { Id =1, Title = "Dying Light 2", IsFinished = false, ImgUrl = "https://image.ceneostatic.pl/data/article_picture/87/ba/8615-3732-4335-82df-e6522b68f716_large.png", TimeSpent = 0 });
         }
     }
 }
